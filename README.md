@@ -1,6 +1,6 @@
 # Repo to Store dot files
 - Store this repo somewhere then create symbolic links in your home directory to the dot files of your choosing within the directory of the machine you need. For example `ln -s /myrepo/boltzmann/.bashrc ~/.bashrc`.
-- There is a separate branch for testing new changes to your dot files, be aware that your links will point to the active branch. So if you want to test changes, you can switch to the `dev` branch and make changes and then open a new terminal tab which will source the dot files on your active branch.
+- There is a separate branch for testing new changes to your dot files, be aware that your links will point to the active branch. So if you want to test changes, you can switch to the `dev` branch and make changes and then open a new terminal tab which will source the dot files on your active branch unless it is dynamically loaded like a `.vimrc`.
 
 # Machines
 - `boltzmann` is my lab machine with env variables specific to the system config
