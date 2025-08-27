@@ -17,7 +17,8 @@ fi
 # SEAN CRANFORD
 #NOTE: your directory probably isn't called project on your system, change this to the approriate path. Similarly, if .bashrc is not used change corresponding references
 
-#custom display for environments, called below in PS1 export, \e[1;38;2;135;0;215m is for the shade of purple i want and for it to be bold
+
+##custom display for environments, called below in PS1 export, \e[1;38;2;135;0;215m is for the shade of purple i want and for it to be bold
 #__my_custom_env_display() {
 #    if [[ "$CONDA_DEFAULT_ENV" == "base" ]]; then
 #        echo -e "\e[1;38;2;135;0;215m(conda)\e[0m"
@@ -40,7 +41,7 @@ export PATH="/project/$USER/local/bin:/project/$USER/local/scripts:$PATH" #have 
 
 stty erase "^?" #binds backspace key to ^? so it is usable, some systems default to ctrl+h only and this corrects
 #export LS_COLORS='di=94' #uses ansi bright blue instead of default ansi blue, 34. USE .dircolor instead!
-eval $(dircolors ~/.dircolors) #evaluates colorsettings in .dircolors. this was generated through dircolor -p > ~/.dircolors
+eval $(dircolors ~/.dircolors) #evaluates colorsettings in .dircolors. this was generated through dircolors -p > ~/.dircolors
 
 #cd /project/$USER #open shell in project directory to limit accidental disk usage on local machine
 cd /scratch.nike/$USER #open shell in scratch directory for ease
@@ -52,56 +53,20 @@ export MY_PLUGINS=$LOCAL_CODES/us3d-files/plugins #creates env variable for us3d
 export OPT=/project/$USER/opt #creates enviro variable for opt dir
 export MSCR=/scratch.nike/$USER #creates enviro variable for scratch
 export COMMON=/g/a-candl-hbj/COMMON #enviro variable for common dir
+#export SCHW=/g/enet-ar-schwart/$USER #enviro variable for ar-schwart dir
+export REPO=/project/$USER/my-repos #env variable for git repo location
 export CONDA_CHANGEPS1=false #keeps conda from changing my prompt
 export SIMPLE_BACKUP_SUFFIX=".backup"
-#this is how conda is initialized at startup, you an also use conda activate and conda deactivate to load and unload env
-# >>> conda initialize >>> 
-# !! Contents within this block are managed by 'conda init' !!
-#__conda_setup="$('/project/cranf014/local/codes/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#    eval "$__conda_setup"
-#else
-#    if [ -f "/project/cranf014/local/codes/anaconda3/etc/profile.d/conda.sh" ]; then
-#        . "/project/cranf014/local/codes/anaconda3/etc/profile.d/conda.sh"
-#    else
-#        export PATH="/project/cranf014/local/codes/anaconda3/bin:$PATH"
-#    fi
-#fi
-#unset __conda_setup
-# <<< conda initialize <<<
-
-# Conda init is needed within the bashrc for the cluster because our system is very old and modulefiles dont have full functionality
-# >>> conda init only, load python envs later >>>
-if [ -f $OPT/install/anaconda/anaconda3-24.9.2/etc/profile.d/conda.sh ]; then #change to location of conda bash function
-   source $OPT/install/anaconda/anaconda3-24.9.2/etc/profile.d/conda.sh
-fi
-# <<< conda init only <<<   
-
-#custom display for environments, called below in PS1 export, \e[1;38;2;135;0;215m is for the shade of purple i want and for it to be bold
-#__my_custom_env_display() {
-#    if [[ "$CONDA_DEFAULT_ENV" == "base" ]]; then
-#        echo -e "\e[1;38;2;135;0;215m(conda)\e[0m"
-##    elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-##        echo -e "\e[1;38;2;135;0;215m($CONDA_DEFAULT_ENV)\e[0m"
-##    elif [[ -n "$VIRTUAL_ENV" ]]; then
-##        echo -e "\e[1;38;2;135;0;215m($(basename "$VIRTUAL_ENV"))\e[0m"
-##    elif [[ -n "$MY_ENV" ]]; then
-##        echo -e "\e[1;38;2;135;0;215m($MY_ENV)\e[0m"
-#    fi
-#}
-
 
 # explaination for following command
 # set up command prompt to be easy-to-read
 # Follows the following pattern:
 # blank line
-# [Current directory, bold and in blue]
+# [Current directory, bold and in green]
 # user_name@machine_name:
 
-#export PS1='\n'"\e[1;32m[\$PWD]\[\$(if [[ -n \$CONDA_DEFAULT_ENV ]]; then echo \" (\$CONDA_DEFAULT_ENV)\"; elif [[ -n \$VIRTUAL_ENV ]]; then echo \" (venv)\"; elif [[ -n \$MY_ENV ]]; then echo \" (\$MY_ENV)\"; fi)\]\e[0m"$'\n'"\u@\H: "
-export PS1="\e[1;32m[\$PWD]\e[0m"$'\n'"\e[1;31m\u@\H:\e[0m "
-#export PS1='\n'"\e[1;32m[\$PWD]\e[0m$(__my_custom_env_display)"$'\n'"\u@\H: "
-#export PS1='\n'"\e[1;32m[\$PWD]\e[0m$(__my_custom_env_display)"$'\n'"\u@\e[1;31m\H\e[0m: " #old, for showing conda display
+#export PS1="\e[1;32m[\$PWD]\e[0m"$'\n'"\u@\H: "  
+export PS1="\e[1;32m[\$PWD]\e[0m"$'\n'"\e[1;31m\u@\H:\e[0m " # changes hostname to red, useful for remote machines
 #    \n: Inserts a newline character, so your prompt starts on a new line.
 #    \e[1;34m: Changes the text color to bold green. The sequence \e begins an escape sequence, and [1;34m sets the color (1 for bold, 32 for green).
 #    [\$PWD]: Displays the current working directory (the full path).
@@ -127,6 +92,7 @@ if [ -f ~/.bash_functions ]; then #define functions in this file and load here
     . ~/.bash_functions
 fi
 
+# if you are in my lab and want access to this, change $USER to my name
 if [ -f /project/$USER/local/codes/us3d-files/module-info/.us3d_load ]; then # access to us3d module loading function
-        . /project/$USER/local/codes/us3d-files/module-info/.us3d_load
+	. /project/$USER/local/codes/us3d-files/module-info/.us3d_load
 fi

@@ -12,11 +12,26 @@ set norelativenumber                   " No relative renumbering by default
 set cursorline                         " Highlight current line
 set hidden                             " Allow unsaved buffers to stay open
 set updatetime=300                     " Faster UI updates (lint/signs)
-set signcolumn=yes                     " Prevent text shifting when signs appear
-set termguicolors                      " 24-bit color in capable terminals
+
+" Always show sign column (prevents text shift when ALE/lint signs appear)
+if has("patch-8.1.1564")
+  set signcolumn=yes
+endif
+
+" Enable 24-bit truecolor support if available
+if has("termguicolors")
+  set termguicolors
+endif
+
 set laststatus=2                       " Always show statusline
 set showmode                           " Show -- INSERT -- etc.
-set clipboard=unnamedplus              " Use system clipboard when available
+
+" Clipboard: unnamedplus requires +clipboard feature; guard it.
+if has('clipboard')
+  set clipboard=unnamedplus            " Use system clipboard when available
+endif
+
+"set clipboard=unnamedplus              " Use system clipboard when available
 set history=500                        " Command/search history depth
 
 " Leader for custom mappings (toggles, navigation, etc.)
@@ -141,7 +156,18 @@ nnoremap <leader>c :ToggleCC<CR>
 set listchars=tab:»·,trail:·,extends:>,precedes:<,nbsp:+
 nnoremap <leader>l :set invlist<CR>
 " Turn off Relative numbers (if on) and numbers, mainly for line copying.
-command! ToggleNumbers if &number || &relativenumber | set nonumber norelativenumber | else | set number norelativenumber | endif
+" command! ToggleNumbers if &number || &relativenumber | set nonumber norelativenumber | else | set number norelativenumber | endif
+
+" Relative numbers (Vim 7.3+). Define ToggleNumbers differently if missing.
+if exists('&relativenumber')
+  set norelativenumber
+  " ToggleNumbers: hide both if either is on; else restore to number only
+  command! ToggleNumbers if &number || &relativenumber | set nonumber norelativenumber | else | set number norelativenumber | endif
+else
+  " Very old Vim: only toggle 'number'
+  command! ToggleNumbers if &number | set nonumber | else | set number | endif
+endif
+
 nnoremap <leader>N :ToggleNumbers<CR>
 
 " ====================== Navigation & quality-of-life ==================
@@ -261,22 +287,21 @@ if g:use_plugins
   Plug 'preservim/vim-pencil'
   Plug 'dhruvasagar/vim-table-mode'
 
-  " Fortran
-  Plug 'vtjeng/vim-modern-fortran'
-
   " Colorscheme
   Plug 'morhetz/gruvbox'
+  Plug 'joshdick/onedark.vim'
 
   call plug#end()
 endif
 
 " Colorscheme (safe if not installed)
+" turns on syntax highlighting
+syntax on
 try
-  colorscheme gruvbox
+  colorscheme onedark
 catch /^Vim\%((\a\+)\)\=:E185/
   colorscheme koehler
 endtry
-syntax on
 
 " ================= Plugin-aware mappings (safe fallbacks) =============
 " FZF file/buffer search with :find fallback

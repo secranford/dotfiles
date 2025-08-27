@@ -1,0 +1,150 @@
+*my-plugins.txt*   Cheat sheet for installed plugins and custom mappings
+                                                      Last change: 2025 Aug 27
+
+==============================================================================
+INTRODUCTION                                                     *my-plugins*
+
+This document summarizes the most useful commands and mappings from the
+plugins and customizations in your vimrc.  Open it any time with:
+
+        :h my-plugins
+
+
+==============================================================================
+FZF + RIPGREP                                                    *my-plugins-fzf*
+
+Mappings:
+        ,p              :Files   (fuzzy file finder)
+        ,b              :Buffers (switch buffers)
+        ,r              :Rg      (ripgrep search; fallback to :grep)
+
+Tips:
+        In FZF picker: <C-t> open tab, <C-v> vsplit, <C-x> split
+
+
+==============================================================================
+GIT                                                              *my-plugins-git*
+
+Fugitive:
+        :G              Git status (stage/commit/etc.)
+        :Gdiffsplit     Diff split
+        :Gblame         Blame view
+        :Glog           Git log in quickfix
+
+GitGutter:
+        Shows +/~/- signs in the gutter
+        :GitGutterToggle         toggle on/off
+        :GitGutterStageHunk      stage current hunk
+        :GitGutterUndoHunk       undo current hunk
+        ]c / [c                  jump next/prev hunk
+
+
+==============================================================================
+EDITING HELPERS                                                  *my-plugins-edit*
+
+Surround:
+        cs"'    change "..." to '...'
+        ds(     delete (...)
+        ysiw]   wrap inner word with [ ]
+
+Commentary:
+        gcc     comment/uncomment line
+        gc{motion}   comment a motion (e.g., gc3j)
+        Visual + gc  comment block
+
+Visual Multi:
+        <C-n>   add cursor on word
+        n / N   next/prev match
+        q       skip match
+        <C-Up>/<C-Down> add cursors linewise
+
+Targets.vim:
+        Extra text objects like "an)" (around next parentheses)
+
+
+==============================================================================
+ALE LINTING & FORMATTING                                         *my-plugins-ale*
+
+On save/type: diagnostics appear in gutter
+
+Commands:
+        :ALEHover               hover docs
+        :ALEGoToDefinition      jump to definition
+        :ALEFindReferences      find references
+        :ALERename              rename symbol
+        :ALEInfo                show active linters/servers
+        :ALEFix                 run formatters
+
+External tools:
+        Python: pyright, ruff, black
+        Shell: bash-language-server, shellcheck, shfmt
+        Fortran: fortls, fprettify
+        Markdown: marksman, prettier
+
+
+==============================================================================
+ULTISNIPS & SNIPPETS                                             *my-plugins-snips*
+
+        <Tab>          expand / jump forward
+        <S-Tab>        jump backward
+        :UltiSnipsEdit edit snippets for current filetype
+
+
+==============================================================================
+MARKDOWN HELPERS                                                 *my-plugins-md*
+
+vim-markdown: syntax and folding
+
+vim-pencil: auto-enabled in Markdown buffers (soft wrap)
+
+vim-table-mode:
+        :TableModeToggle  align ASCII tables
+
+
+==============================================================================
+FORTRAN                                                          *my-plugins-fortran*
+
+Filetype rules:
+        *.f90     free-form: 2-space indent
+        *.f / *.for   fixed-form: tabs=8, textwidth=72, ruler at 73
+
+With fortls installed:
+        ALEGoToDefinition, ALEHover, ALEFix (fprettify)
+
+
+==============================================================================
+COLORSCHEMES                                                     *my-plugins-colors*
+
+        :colorscheme <Tab>       cycle installed schemes
+        :echo g:colors_name      show active scheme
+
+
+==============================================================================
+CUSTOM TOGGLES & HELPERS                                         *my-plugins-toggles*
+
+Toggles:
+        ,N              Toggle line numbers
+        ,c              Toggle column guide
+        ,C              Toggle cursorline
+        ,l              Toggle invisibles
+
+Scratch buffers:
+        ,q              open ~/buffer
+        ,x              open ~/buffer.md
+
+Trailing whitespace:
+        Highlighted automatically
+        :call CleanExtraSpaces()   remove manually
+
+Diff mode:
+        ]c / [c         jump next/prev hunk
+        do              diffget (take other side)
+        dp              diffput (send to other side)
+        zR / zM         open/close all folds
+        za              toggle fold
+        :diffupdate     recompute diff
+
+Statusline shows cwd, file, line/col, % through file, paste mode
+
+==============================================================================
+END

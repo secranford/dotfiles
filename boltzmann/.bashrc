@@ -32,7 +32,8 @@ fi
 #}
 
 #=====================System Setup=================================
-umask 066 #sets default permissions to be read-write-execute for user, and read permissions for everybody else
+umask 066 #sets default directory permissions to read-write-execute for user and execute for group/others. new files have read-write permissions for user and none for group/others.  
+#umask 022 #sets default permissions to be read-write for user, and read permissions for everybody else for files. For directories, this is read-write-execute for user and read-execute for groups/others. This is good for cluster so that if want to give permissions to a specific file, people can navigate your directories. 
 module use --append /project/$USER/opt/moduleFiles # uses any custom modules you have set up
 #module use --append /project/heinz194/opt/moduleFiles # JP's modules, for reference or use
 
@@ -53,50 +54,19 @@ export OPT=/project/$USER/opt #creates enviro variable for opt dir
 #export MSCR=/scratch.nike/$USER #creates enviro variable for scratch
 export COMMON=/g/a-candl-hbj/COMMON #enviro variable for common dir
 export SCHW=/g/enet-ar-schwart/$USER #enviro variable for ar-schwart dir
+export REPO=/project/$USER/my-repos #env variable for git repo location
 #export CONDA_CHANGEPS1=false #keeps conda from changing my prompt
 export SIMPLE_BACKUP_SUFFIX=".backup"
-
-#this is how conda is initialized at startup, you an also use conda activate and conda deactivate to load and unload env
-# >>> conda initialize >>> 
-# !! Contents within this block are managed by 'conda init' !!
-#__conda_setup="$('/project/cranf014/local/codes/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#    eval "$__conda_setup"
-#else
-#    if [ -f "/project/cranf014/local/codes/anaconda3/etc/profile.d/conda.sh" ]; then
-#        . "/project/cranf014/local/codes/anaconda3/etc/profile.d/conda.sh"
-#    else
-#        export PATH="/project/cranf014/local/codes/anaconda3/bin:$PATH"
-#    fi
-#fi
-#unset __conda_setup
-# <<< conda initialize <<<
-
-#custom display for environments, called below in PS1 export, \e[1;38;2;135;0;215m is for the shade of purple i want and for it to be bold
-#__my_custom_env_display() {
-#    if [[ "$CONDA_DEFAULT_ENV" == "base" ]]; then
-#        echo -e "\e[1;38;2;135;0;215m(conda)\e[0m"
-##    elif [[ -n "$CONDA_DEFAULT_ENV" ]]; then
-##        echo -e "\e[1;38;2;135;0;215m($CONDA_DEFAULT_ENV)\e[0m"
-##    elif [[ -n "$VIRTUAL_ENV" ]]; then
-##        echo -e "\e[1;38;2;135;0;215m($(basename "$VIRTUAL_ENV"))\e[0m"
-##    elif [[ -n "$MY_ENV" ]]; then
-##        echo -e "\e[1;38;2;135;0;215m($MY_ENV)\e[0m"
-#    fi
-#}
-
 
 # explaination for following command
 # set up command prompt to be easy-to-read
 # Follows the following pattern:
 # blank line
-# [Current directory, bold and in blue]
+# [Current directory, bold and in green]
 # user_name@machine_name:
 
-#export PS1='\n'"\e[1;32m[\$PWD]\[\$(if [[ -n \$CONDA_DEFAULT_ENV ]]; then echo \" (\$CONDA_DEFAULT_ENV)\"; elif [[ -n \$VIRTUAL_ENV ]]; then echo \" (venv)\"; elif [[ -n \$MY_ENV ]]; then echo \" (\$MY_ENV)\"; fi)\]\e[0m"$'\n'"\u@\H: "
 export PS1="\e[1;32m[\$PWD]\e[0m"$'\n'"\u@\H: "
-#export PS1='\n'"\e[1;32m[\$PWD]\e[0m$(__my_custom_env_display)"$'\n'"\u@\H: " #old, for showing conda display
-#export PS1='\n'"\e[1;32m[\$PWD]\e[0m$(__my_custom_env_display)"$'\n'"\u@\e[1;31m\H\e[0m: "
+#export PS1="\e[1;32m[\$PWD]\e[0m"$'\n'"\e[1;31m\u@\H:\e[0m " # changes hostname to red, useful for remote machines
 #    \n: Inserts a newline character, so your prompt starts on a new line.
 #    \e[1;34m: Changes the text color to bold green. The sequence \e begins an escape sequence, and [1;34m sets the color (1 for bold, 32 for green).
 #    [\$PWD]: Displays the current working directory (the full path).
@@ -105,7 +75,7 @@ export PS1="\e[1;32m[\$PWD]\e[0m"$'\n'"\u@\H: "
 #    @\H: Displays the hostname of the machine.
 #    : : Adds a colon followed by a space to the end of the prompt.
 # set up autocomplete functions to be easier to use (more like c-shell)
-bind 'set completion-ignore-case on' #This command makes Bash's tab-completion case-insensitive. For example, typing cd Desk and pressing tab will also match Desktop, even if the case doesn't match exactly.
+bind 'set completion-ignore-case on' #This command makes Bash's tab-completion case-insensitive. For example, typing cd desk and pressing tab will also match Desktop, even if the case doesn't match exactly.
 bind 'set show-all-if-ambiguous on' #When you type a partial command or filename and press tab, and there are multiple possible completions, this option will immediately show all possible completions without requiring a second tab press. For example instead of tab stopping at D, it will display Desktop Downloads Documents.
 #bind 'set menu-complete-display-prefix on' #When you start typing and press tab, it will complete the prefix you've typed, and if you press tab again, it will cycle through the possible completions. Essentially, keep hitting tab to go to next option.
 #bind '"\t": complete' #This binds the tab key (\t) to trigger the completion function. It explicitly sets tab to be the key you use for auto-completion. Typically just as a precaution
@@ -117,7 +87,6 @@ complete -d cd #This sets up a completion rule that only completes directory nam
 if [ -n "$PS1" ]; then #checks that shell is interactive before loading modules
 module load tecplot > /dev/null 2>&1 #loads module without displaying output
 
-	
 fi
 
 
@@ -130,6 +99,7 @@ if [ -f ~/.bash_functions ]; then #define functions in this file and load here
     . ~/.bash_functions
 fi
 
+# if you are in my lab and want access to this, change $USER to my name
 if [ -f /project/$USER/local/codes/us3d-files/module-info/.us3d_load ]; then # access to us3d module loading function
 	. /project/$USER/local/codes/us3d-files/module-info/.us3d_load
 fi

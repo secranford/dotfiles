@@ -84,29 +84,28 @@ mgds_load() {
                 local) cmds=("${local_cmds[@]}") ;;
                 *) echo "Unknown command list: $2"; return 1 ;;
             esac
-            echo "Executing first two commands of $2:"
-                        for cmd in "${cmds[@]:0:2}"; do
-                                        eval "$cmd"
-                                                    done
-                                                                #echo "Remaining commands in $2:"
-                                                                            for cmd in "${cmds[@]:2}"; do
-                                                                                            echo "$cmd"
-                                                                                                        done
-                                                                                                                    return
-                                                                                                                            else
-                                                                                                                                        case "$1" in
-                                                                                                                                                        loki) cmds=("${loki_cmds[@]}") ;;
-                                                                                                                                                                        local) cmds=("${local_cmds[@]}") ;;
-                                                                                                                                                                                        *) echo "Unknown command list: $1"; return 1 ;;
-                                                                                                                                                                                                    esac
-                                                                                                                                                                                                            fi
-                                                                                                                                                                                                                fi
-            
-                                                                                                                                                                                                                    for cmd in "${cmds[@]}"; do
-                                                                                                                                                                                                                            eval "$cmd"
-                                                                                                                                                                                                                                done
-                                                                                                                                                                                                                                }
-            
+            #echo "Executing first two commands of $2:"
+            for cmd in "${cmds[@]:0:2}"; do
+                eval "$cmd"
+            done
+            #echo "Remaining commands in $2:"
+            for cmd in "${cmds[@]:2}"; do
+                echo "$cmd"
+            done
+            return
+        else
+            case "$1" in
+                loki) cmds=("${loki_cmds[@]}") ;;
+                local) cmds=("${local_cmds[@]}") ;;
+                *) echo "Unknown command list: $1"; return 1 ;;
+            esac
+        fi
+    fi
+
+    for cmd in "${cmds[@]}"; do
+        eval "$cmd"
+    done
+}
 ###############################
 # Command Wrappers
 ###############################
@@ -157,4 +156,8 @@ mopt() {
 
 mscr() {
 	cd /scratch.nike/$USER/$1
+}
+
+mrep() {
+    cd /project/$USER/my-repos/$1
 }

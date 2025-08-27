@@ -120,8 +120,8 @@ mgds_load() {
         "echo '# --- Loki MGDS Build ---'"
         "export MODULEPATH=/share/apps/Modules"
         "module load MPI/ROME/OpenMPI/4.1.1/GCC/4.8.5"
-	"module use --append /project/cranf014/opt/moduleFiles" 
-      	"module load MK/HDF5/loki/4.0.3/OpenMPI/4.1.1/GCC/4.8.5" 
+        "module use --append /project/cranf014/opt/moduleFiles" 
+        "module load MK/HDF5/loki/4.0.3/OpenMPI/4.1.1/GCC/4.8.5" 
         "module load MK/ParMETIS/loki/4.0.3/OpenMPI/4.1.1/GCC/4.8.5"
     )
 
@@ -220,3 +220,6 @@ schw() {
         cd /g/enet-ar-schwart/$USER/$1
 }
 
+mrep() {
+    cd /project/$USER/my-repos/$1
+}
