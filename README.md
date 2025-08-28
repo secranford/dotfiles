@@ -9,7 +9,7 @@
 
 # Vim Plugins
 - To install plugins: `curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
-- Run `:PlugInstall` in vim to install plugins that are listed in `.vimrc` or similar files
+- Run `:PlugInstall` in vim to install plugins that are listed in `.vimrc` or similar files. If up/downgrading plugins that are already installed, run `:PlugUpgrade`.
 - If you want to run without plugins, run `VIM_NOPLUG=1 vim` or add something similar to your `.vimrc`
 - Add a custom help doc for your plugins. Create a `doc` directory, `mkdir -p ~/.vim/doc` and place `my-plugins.txt` within. In vim, run `:helptags ~/.vim/doc` to make vim load the docs and `:h my-plugins` to access the help from within vim.
 - If you want/need to run without plugins, you should be able to use the same `.vimrc` although some features will be unavailable. Copy `onedark.vim` and `autoload_onedark.vim` to you `.vim/colors` and `.vim/autoload`, respectively to have access to the onedark colorscheme. Rename `autoload_onedark.vim` to `onedark.vim` once it is in `.vim/autoload`. Both files were copied from the [onedark][onedark] github page.

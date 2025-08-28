@@ -74,9 +74,10 @@ Commands:
         :ALERename              rename symbol
         :ALEInfo                show active linters/servers
         :ALEFix                 run formatters
+        :ALEFixSuggest          check active formatters
 
 External tools:
-        Python: pyright, ruff, black
+        Python: pyright, black
         Shell: bash-language-server, shellcheck, shfmt
         Fortran: fortls, fprettify
         Markdown: marksman, prettier
@@ -111,7 +112,38 @@ Filetype rules:
 With fortls installed:
         ALEGoToDefinition, ALEHover, ALEFix (fprettify)
 
+==============================================================================
+LATEX (VIMTEX)                                                     *my-plugins-tex*
 
+Requirements:
+        - TeX Live (already installed)
+        - latexmk (bundled with TeX Live; used as the default compiler)
+        - A PDF viewer with SyncTeX support (zathura, okular, skim, etc.)
+
+Plugin:
+        vimtex (lervag/vimtex)
+
+Compiler & Viewer:
+        :VimtexCompile        Start/stop continuous compilation with latexmk
+        :VimtexView           Open PDF viewer and jump to current location
+        :VimtexTocOpen        Open TOC in a side window
+        :VimtexClean          Clean auxiliary files
+        :VimtexStatus         Show compiler status
+        :VimtexErrors         Show LaTeX errors in quickfix
+
+Mappings (localleader, usually '\'):
+        \ll     Compile (toggle continuous mode)
+        \lv     View PDF (forward search)
+        \lt     Open TOC
+        \lc     Clean aux files
+        \lk     Show compiler status
+        \le     Show errors
+        \lr     Reload Vimtex state
+
+Linting & Formatting:
+        ALE can use:
+          - chktex (installed via TeX Live) for linting
+          - texlab (optional LSP) for IDE-like features
 ==============================================================================
 COLORSCHEMES                                                     *my-plugins-colors*
 
@@ -126,7 +158,7 @@ Toggles:
         ,N              Toggle line numbers
         ,c              Toggle column guide
         ,C              Toggle cursorline
-        ,l              Toggle invisibles
+        ,il              Toggle invisibles
 
 Scratch buffers:
         ,q              open ~/buffer

@@ -37,7 +37,7 @@ set history=500                        " Command/search history depth
 " Leader for custom mappings (toggles, navigation, etc.)
 let mapleader = ","
 " to run commands defined with leader key, type <leader> followed by the cmd
-" for example, typing ,n would turn relative numbering on as defined   
+" for example, typing ,n would turn relative numbering on as defined
 " ===================== Filetype & autoread helpers ====================
 filetype plugin on
 filetype indent on
@@ -154,7 +154,7 @@ command! ToggleCC if &colorcolumn == '' | execute 'set colorcolumn=' . (&textwid
 nnoremap <leader>c :ToggleCC<CR>
 " Invisibles: show/hide tabs/trailing/etc.
 set listchars=tab:»·,trail:·,extends:>,precedes:<,nbsp:+
-nnoremap <leader>l :set invlist<CR>
+nnoremap <leader>il :set invlist<CR>
 " Turn off Relative numbers (if on) and numbers, mainly for line copying.
 " command! ToggleNumbers if &number || &relativenumber | set nonumber norelativenumber | else | set number norelativenumber | endif
 
@@ -291,6 +291,10 @@ if g:use_plugins
   Plug 'morhetz/gruvbox'
   Plug 'joshdick/onedark.vim'
 
+  " Latex
+  "Plug 'lervag/vimtex', { 'tag': 'v2.15' } " this seems to slow down vim, tag
+  "is needed for compatitbility
+
   call plug#end()
 endif
 
@@ -308,7 +312,7 @@ endtry
 if exists(':Files')
   nnoremap <leader>p :Files<CR>
 else
-  nnoremap <leader>p :find 
+  nnoremap <leader>p :find
 endif
 if exists(':Buffers')
   nnoremap <leader>b :Buffers<CR>
@@ -317,7 +321,7 @@ endif
 if exists(':Rg')
   nnoremap <leader>r :Rg<CR>
 else
-  nnoremap <leader>r :silent grep 
+  nnoremap <leader>r :silent grep
   autocmd QuickFixCmdPost grep cwindow
 endif
 
@@ -333,32 +337,47 @@ else
   nnoremap <leader>gb :Git blame -- <bar> redraw!<CR>
 endif
 
+" ALE specific vars, needs to be defined before ALE loaded
+let g:ale_lint_on_text_changed = 'always'
+let g:ale_lint_on_insert_leave = 1
+let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 1
+let g:ale_virtualtext_cursor = 1
+let g:ale_linters_explicit = 1 " only use explicitlly set linters, no conflicts
+let g:ale_fix_on_save = 1
+
+" Only use these linters for ALE
+let g:ale_linters = {
+\ 'python': ['pyright'],
+\ 'sh':     ['bash-language-server', 'shellcheck'],
+\ 'fortran':['fortls'],
+\ 'markdown':['marksman'],
+\ 'tex':['chktex'],
+\ }
+
+let g:ale_fixers = {
+\ 'python': ['black'],
+\ 'sh':     ['shfmt'],
+\ 'markdown':['prettier'],
+\ '*':      ['trim_whitespace', 'remove_trailing_lines'],
+\ }
+"\ 'fortran':['fprettify'], " something special needs to be done for this...
+
 " ALE settings (only if loaded)
 if exists(':ALEInfo')
-  let g:ale_lint_on_text_changed = 'always'
-  let g:ale_lint_on_insert_leave = 1
-  let g:ale_sign_column_always = 1
-  let g:ale_set_highlights = 1
-  let g:ale_virtualtext_cursor = 1
-
-  let g:ale_linters = {
-  \ 'python': ['pyright', 'ruff'],
-  \ 'sh':     ['bashls', 'shellcheck'],
-  \ 'fortran':['fortls'],
-  \ 'markdown':['marksman'],
-  \ }
-
-  let g:ale_fixers = {
-  \ 'python': ['black', 'ruff'],
-  \ 'sh':     ['shfmt'],
-  \ 'fortran':['fprettify'],
-  \ 'markdown':['prettier'],
-  \ '*':      ['trim_whitespace'],
-  \ }
-  let g:ale_fix_on_save = 1
+  " Define a custom fixer for ALE
+"  call ale#fix#registry#Add('fprettify', 'ale#fixers#generic#Run',
+"  \ ['fprettify', '--silent', '--case=upper', '--indent=2', '--line-length=80'],
+"  \ 'Format Fortran with fprettify')
 
   nnoremap <silent> <leader>ai :ALEInfo<CR>
 endif
+
+" Use the file's directory as the project root for LSPs
+augroup ALEProjectRoot
+  autocmd!
+  autocmd FileType python,sh,fortran,markdown let b:ale_root = expand('%:p:h')
+augroup END
 
 " UltiSnips triggers (only if present)
 if exists('g:UltiSnipsExpandTrigger') || exists(':UltiSnipsEdit')
@@ -396,6 +415,13 @@ autocmd FileType fortran if expand('%:e') =~? '^\%(f\|for\)$' |
       \ setlocal noexpandtab shiftwidth=8 tabstop=8 softtabstop=8 textwidth=72 colorcolumn=73 |
       \ let b:fortran_fixed_source=1 |
       \ endif
+
+" LaTeX: rules and autocmds
+let g:tex_flavor = 'latex'        " default to LaTeX, not plain TeX
+autocmd FileType tex setlocal spell spelllang=en_us wrap linebreak
+autocmd FileType tex setlocal conceallevel=2     " pretty math; toggle with :set cole=0
+" If you dislike conceal: use 0 instead of 2.
+let g:vimtex_view_method = 'general' " Zathura recommended if available, best SyncTeX. general calls default specified by system with xdg-open.
 
 " =================== Quickfix / Location-list helpers =================
 autocmd QuickFixCmdPost [^l]* cwindow
@@ -492,4 +518,3 @@ nnoremap <leader>pp :setlocal paste!<CR>
 
 " Remove stray ^M characters
 nnoremap <Leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm
-
