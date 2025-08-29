@@ -1,0 +1,5 @@
+# list of packages installed within conda for linting and language servers and linked to $USER/local/bin
+python=3.11 pyright black fortls fprettify shellcheck bash-language-server nodejs
+curl -L -o shfmt https://github.com/mvdan/sh/releases/download/v3.7.0/shfmt_v3.7.0_linux_amd64
+curl -L -o marksman https://github.com/artempyanykh/marksman/releases/download/2024-xx-xx/marksman-linux-x64
+

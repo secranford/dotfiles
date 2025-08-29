@@ -1,0 +1,6 @@
+# list of packages installed with package managers for linting and language servers
+sudo apt install -y ripgrep shellcheck shfmt nodejs npm zathura
+sudo snap install marksman
+sudo apt install -y pipx
+pipx install black pyright fortls fprettify
+sudo npm install -g prettier bash-language-server

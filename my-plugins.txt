@@ -65,7 +65,10 @@ Targets.vim:
 ==============================================================================
 ALE LINTING & FORMATTING                                         *my-plugins-ale*
 
-On save/type: diagnostics appear in gutter
+Overview:
+        ALE can use installed language servers (pyright, fortls, bashls, marksman)
+        to provide IDE-like features: hover docs, go-to-definition, references,
+        rename, and completion.
 
 Commands:
         :ALEHover               hover docs
@@ -76,13 +79,41 @@ Commands:
         :ALEFix                 run formatters
         :ALEFixSuggest          check active formatters
 
+Custom Mappings (remapped from Vim defaults):
+        K          :ALEHover               Show hover documentation under cursor
+        gd         :ALEGoToDefinition      Jump to LSP definition
+        gr         :ALEFindReferences      List references in quickfix/location list
+        gR         :ALERename              Rename symbol across the project
+
 External tools:
         Python: pyright, black
         Shell: bash-language-server, shellcheck, shfmt
         Fortran: fortls, fprettify
         Markdown: marksman, prettier
 
+Check LSP is running:
+        :ALEInfo           Shows which server is started and the root directory
+        :echo b:ale_root   The LSP project root ALE is using
+        :echo executable('pyright')  Should print 1 when found on PATH (and similarly
+                                     for fortls, bash-language-server, marksman)
+Auto Completion:
+Triggers:
+        <C-x><C-o>    Built-in Vim trigger for "omnifunc" completion.
+                      With ALE, this queries the language server.
 
+        <C-Space>     (custom mapping)
+                      - If popup menu is closed → triggers omnifunc (same as <C-x><C-o>)
+                      - If popup menu is open   → cycles to the next item (same as <C-n>)
+
+Popup Navigation:
+        <C-n>         Next item in the popup menu
+        <C-p>         Previous item
+        <C-Space>     Also cycles forward (custom)
+
+Accept / Cancel:
+        <Enter>       Accept the currently selected completion
+        <C-y>         Accept explicitly
+        <C-e>         Cancel and close the menu
 ==============================================================================
 ULTISNIPS & SNIPPETS                                             *my-plugins-snips*
 
@@ -173,6 +204,7 @@ Diff mode:
         do              diffget (take other side)
         dp              diffput (send to other side)
         zR / zM         open/close all folds
+        zo / zc         open/close current fold
         za              toggle fold
         :diffupdate     recompute diff
 
