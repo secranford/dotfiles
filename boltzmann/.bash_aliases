@@ -21,19 +21,19 @@ alias grep="grep --color"
 alias fgrep="fgrep --color"
 alias egrep="egrep --color"
 alias lg="ls -lAh | grep" #for use in searching, include pattern after and continue piping as needed
-alias sshy="ssh -Y" #shouldn't default ssh to this
-alias pwd='pwd -P' #ensures full path is always listed, not symlinked one
+alias sshy="ssh -Y"       #shouldn't default ssh to this
+alias pwd='pwd -P'        #ensures full path is always listed, not symlinked one
 
 #alias cp="cp -b" #-b option creates backup if file already exists, you can delete this later, safety feature
 #alias mv="mv -b" #NOTE: doing this caused issues because i did not specify interactive shell only for aliases and so system processes were creating a bunch of backups#alias cp="cp -b" #-b option creates backup if file already exists, you can delete this later, safety feature
 #alias mv="mv -b" #NOTE: doing this caused issues because i did not specify interactive shell only for aliases and so system processes were creating a bunch of backups
 
-alias disizes='du -hs * | sort -hr' #lists the files in the current dir sorted by size big to small. summarizes so no files within dirs listed
+alias disizes='du -hs * | sort -hr'          #lists the files in the current dir sorted by size big to small. summarizes so no files within dirs listed
 alias hiddensizes='du -hs .[^.]* | sort -hr' #similar to above but just shows hidden files and dirs, ie .ssh
 
 # this bwlimit is recommended for our system, probably not needed or a diff number on other systems
 alias rsync="rsync --backup --suffix=.backup --bwlimit=50000" #set bandwidth limit on rsync and is in backup mode so things dont accidentally get deleted, might slow things down though
-alias rsw="rsync -avuP --bwlimit=50000" #syntax: rsw <from> <to>, will copy new files from xxx to yyy ignoring older or up to date files and limiting the bandwidth. WARNING, destination is affected by .bashrc settings, ie, if bashrc for host puts you somewhere automatically, this is already included within the <user>@host path so truncate as needed
+alias rsw="rsync -avuP --bwlimit=50000"                       #syntax: rsw <from> <to>, will copy new files from xxx to yyy ignoring older or up to date files and limiting the bandwidth. WARNING, destination is affected by .bashrc settings, ie, if bashrc for host puts you somewhere automatically, this is already included within the <user>@host path so truncate as needed
 
 #------------------------------
 # Navigation Shortcuts
@@ -45,10 +45,11 @@ alias ...='cd ../..'
 #------------------------------
 # Custom Commands
 #------------------------------
-alias myrc="source ~/.bashrc" #use to source bashrc if pwd not ~, otherwise i use . .bashrc
-alias vmyrc="vim ~/.bashrc" #use to edit bashrc from anywhere
-alias valias="vim ~/.bash_aliases" #use to edit aliases from anywhere
+alias myrc="source ~/.bashrc"       #use to source bashrc if pwd not ~, otherwise i use . .bashrc
+alias vmyrc="vim ~/.bashrc"         #use to edit bashrc from anywhere
+alias valias="vim ~/.bash_aliases"  #use to edit aliases from anywhere
 alias vfunc="vim ~/.bash_functions" #use to edit functions from anywhere
+alias vvrc="vim ~/.vimrc"           #use to edit vimrc from anywhere
 
 alias sqme="squeue -u $USER"
 alias sq="squeue"

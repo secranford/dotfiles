@@ -58,8 +58,8 @@ mgds_load() {
         "echo '# --- Loki MGDS Build ---'"
         "export MODULEPATH=/share/apps/Modules"
         "module load MPI/ROME/OpenMPI/4.1.1/GCC/4.8.5"
-        "module use --append /project/cranf014/opt/moduleFiles" 
-        "module load MK/HDF5/loki/4.0.3/OpenMPI/4.1.1/GCC/4.8.5" 
+        "module use --append /project/cranf014/opt/moduleFiles"
+        "module load MK/HDF5/loki/4.0.3/OpenMPI/4.1.1/GCC/4.8.5"
         "module load MK/ParMETIS/loki/4.0.3/OpenMPI/4.1.1/GCC/4.8.5"
     )
 
@@ -67,12 +67,12 @@ mgds_load() {
         "echo 'MGDS executable still needed'"
         "echo '# --- Local MGDS Build ---'"
         "module use --append /stage/site/modules/common"
-        "module use --append /project/hbj/opt/g/openSUSE-15.0/modules" 
+        "module use --append /project/hbj/opt/g/openSUSE-15.0/modules"
        	"module load Compilers/GCC/7.4.1"
         "module load MPI-HBJ/OpenMPI/3.1.4/GCC/7.4.1"
         "module load hdf5/1.8.21/OpenMPI/3.1.4/GCC/7.4.1"
-	"module use --append /project/cranf014/opt/moduleFiles"
-	"module load MK/ParMETIS/local/4.0.3/OpenMPI/3.1.4/GCC/7.4.1"
+    	"module use --append /project/cranf014/opt/moduleFiles"
+    	"module load MK/ParMETIS/local/4.0.3/OpenMPI/3.1.4/GCC/7.4.1"
     )
 
     if [ $# -eq 0 ]; then
@@ -102,7 +102,13 @@ mgds_load() {
         fi
     fi
 
-    for cmd in "${cmds[@]}"; do
+    #echo "Executing first two commands of $2:"
+    for cmd in "${cmds[@]:0:2}"; do
+        eval "$cmd"
+    done
+
+    for cmd in "${cmds[@]:2}"; do
+        echo ">>> $cmd"
         eval "$cmd"
     done
 }

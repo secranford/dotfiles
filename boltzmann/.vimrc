@@ -309,33 +309,25 @@ endtry
 
 " ================= Plugin-aware mappings (safe fallbacks) =============
 " FZF file/buffer search with :find fallback
-if exists(':Files')
-  nnoremap <leader>p :Files<CR>
-else
-  nnoremap <leader>p :find
-endif
-if exists(':Buffers')
-  nnoremap <leader>b :Buffers<CR>
-endif
+nnoremap <leader>p :Files<CR>
+
+" Buffers remap
+nnoremap <leader>b :Buffers<CR>
 " Ripgrep via FZF if present; else builtin :grep (quickfix opens)
-if exists(':Rg')
-  nnoremap <leader>r :Rg<CR>
-else
-  nnoremap <leader>r :silent grep
-  autocmd QuickFixCmdPost grep cwindow
-endif
+nnoremap <leader>r :Rg<CR>
 
 " Git helpers (fugitive) or shell-out fallback
-if exists(':G')
-  nnoremap <leader>gs :G<CR>
-  nnoremap <leader>gd :Gdiffsplit<CR>
-  nnoremap <leader>gb :Gblame<CR>
-else
-  command! -nargs=* Git execute 'silent !git <args>' | redraw!
-  nnoremap <leader>gs :Git status<CR>
-  nnoremap <leader>gd :Git diff -- <bar> redraw!<CR>
-  nnoremap <leader>gb :Git blame -- <bar> redraw!<CR>
-endif
+"if exists(':G')
+nnoremap <leader>gs :G<CR>
+nnoremap <leader>gd :Gdiffsplit<CR>
+nnoremap <leader>gb :Gblame<CR>
+"else
+"  command! -nargs=* Git execute 'silent !git <args>' | redraw!
+"  nnoremap <leader>gs :Git status<CR>
+"  nnoremap <leader>gd :Git diff -- <bar> redraw!<CR>
+"  nnoremap <leader>gb :Git blame -- <bar> redraw!<CR>
+"endif
+nnoremap <silent><nowait> <leader>gu  :<C-u>GitGutterToggle<CR>
 
 " ALE specific vars, needs to be defined before ALE loaded
 let g:ale_lint_on_text_changed = 'always'
@@ -347,6 +339,7 @@ let g:ale_linters_explicit = 1 " only use explicitlly set linters, no conflicts
 let g:ale_fix_on_save = 1
 " Turn on ALE completion (omnifunc provider)
 let g:ale_completion_enabled = 1
+
 " Nice popup behavior
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
@@ -371,28 +364,16 @@ let g:ale_fixers = {
 \ }
 "\ 'fortran':['fprettify'], " something special needs to be done for this...
 
-" ALE settings (only if loaded)
-if exists(':ALEInfo')
-  " Define a custom fixer for ALE
-"  call ale#fix#registry#Add('fprettify', 'ale#fixers#generic#Run',
-"  \ ['fprettify', '--silent', '--case=upper', '--indent=2', '--line-length=80'],
-"  \ 'Format Fortran with fprettify')
-
-  nnoremap <silent> <leader>ai :ALEInfo<CR>
-endif
-
-" Only define these if ALE is actually loaded
-if exists(':ALEHover')
-  " Hover docs (normal mode): K
-  nnoremap <silent> K :ALEHover<CR>
-
-  " Go to definition: gd
-  nnoremap <silent> gd :ALEGoToDefinition<CR>
-  " References: gr
-  nnoremap <silent> gr :ALEFindReferences<CR>
-  " Rename symbol: gR
-  nnoremap <silent> gR :ALERename<CR>
-endif
+" Trigger info
+nnoremap <silent> <leader>ai :ALEInfo<CR>
+" Hover docs (normal mode): K
+nnoremap <silent> K :ALEHover<CR>
+" Go to definition: gd
+nnoremap <silent> gd :ALEGoToDefinition<CR>
+" References: gr
+nnoremap <silent> gr :ALEFindReferences<CR>
+" Rename symbol: gR
+nnoremap <silent> gR :ALERename<CR>
 
 " Use the file's directory as the project root for LSPs
 augroup ALEProjectRoot
