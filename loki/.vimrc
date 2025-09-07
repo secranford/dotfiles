@@ -194,6 +194,9 @@ nnoremap <silent> <leader><CR> :noh<CR>
 " 0 → first non-blank
 nnoremap 0 ^
 
+" toggle fold column gutter
+nnoremap <silent> <leader>fc :execute (&foldcolumn ? "set foldcolumn=0" : "set foldcolumn=1")<CR>
+
 " Move lines with Alt-j/k (and Cmd-j/k on mac)
 nnoremap <M-j> mz:m+<CR>`z
 nnoremap <M-k> mz:m-2<CR>`z

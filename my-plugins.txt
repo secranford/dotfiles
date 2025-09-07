@@ -189,7 +189,8 @@ Toggles:
         ,N              Toggle line numbers
         ,c              Toggle column guide
         ,C              Toggle cursorline
-        ,il              Toggle invisibles
+        ,il             Toggle invisibles
+        ,<CR>           Clear search highlight, <CR> is carriage return (enter)
 
 Scratch buffers:
         ,q              open ~/buffer

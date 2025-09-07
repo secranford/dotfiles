@@ -77,6 +77,7 @@ set lazyredraw                         " Faster macros (less redraw)
 set magic                              " Modern regex engine (default)
 set showmatch                          " Briefly jump to matching bracket
 set mat=2                              " Match blink time (tenths of a sec)
+set shortmess-=S                       " Displays search match count, vim 8.1.1270+ req
 
 " Builtin file finding & grep (plugin-free fallbacks)
 set path+=**                           " :find searches recursively
@@ -193,6 +194,9 @@ nnoremap <silent> <leader><CR> :noh<CR>
 
 " 0 → first non-blank
 nnoremap 0 ^
+
+" toggle fold column gutter
+nnoremap <silent> <leader>fc :execute (&foldcolumn ? "set foldcolumn=0" : "set foldcolumn=1")<CR>
 
 " Move lines with Alt-j/k (and Cmd-j/k on mac)
 nnoremap <M-j> mz:m+<CR>`z
@@ -327,6 +331,7 @@ nnoremap <leader>gb :Gblame<CR>
 "  nnoremap <leader>gd :Git diff -- <bar> redraw!<CR>
 "  nnoremap <leader>gb :Git blame -- <bar> redraw!<CR>
 "endif
+" Git gutter toggle
 nnoremap <silent><nowait> <leader>gu  :<C-u>GitGutterToggle<CR>
 
 " ALE specific vars, needs to be defined before ALE loaded
