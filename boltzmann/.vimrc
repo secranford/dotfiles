@@ -525,3 +525,7 @@ nnoremap <leader>pp :setlocal paste!<CR>
 
 " Remove stray ^M characters
 nnoremap <Leader>m mmHmt:%s/<C-v><CR>//ge<CR>'tzt'm
+
+" Start with all folds open
+set foldlevel=99          " Allow folds to stay open up to depth 99 overall
+set foldlevelstart=99     " On buffer load, begin with folds shown open
