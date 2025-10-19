@@ -17,4 +17,5 @@
 # ALE Errors
 - You may sometimes run into language server errors when opening files or fixers on save, even though running `:ALEInfo` for your file type returned a successful check. This is most likely due to incorrect installs of the language server or fixer. This can usually be checked by running `--version <executable>` where the executable is the name of your language server or fixer. If you get an error instead of a version number, then the install was the issue.
 - Additionally, if using conda to install packages, you will want to create a special env to install the packages in and then have a directory in your path that you put links to the necessary binaries in. For some packages like `bash-language-server` and `prettier` you will also need `nodejs` and will then need to put a link to `node` in your path as well if it is not available on your system.
+
 [onedark]: https://github.com/joshdick/onedark.vim
