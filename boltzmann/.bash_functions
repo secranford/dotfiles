@@ -108,6 +108,20 @@ upos() {
 
 }
 
+utheory() {
+    local default="$LOCAL/codes/us3d-files/version/1.2.0/doc/US3D-Theory-Manual.pdf"
+    local file
+
+    if [ $# -gt 0 ]; then
+      file="$LOCAL/codes/us3d-files/version/$1/doc/US3D-Theory-Manual.pdf"
+    else
+      file="$default"
+    fi
+
+    okular "$file" > /dev/null 2>&1 &
+
+}
+
 #displays long format of most recent files, pass number to display more than just the most recent
 recent_files() {
     local count=${1:-1}  # Default to 1 if no argument is provided
