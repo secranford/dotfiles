@@ -240,6 +240,10 @@ schw() {
         cd /g/enet-ar-schwart/$USER/$1
 }
 
+cand() {
+        cd /g/enet-ar-candler/COMMON/$1
+}
+
 mrep() {
     cd /project/$USER/my-repos/$1
 }
