@@ -164,6 +164,10 @@ mscr() {
 	cd /scratch.nike/$USER/$1
 }
 
+saschw() {
+    cd /stage/software-schwart
+}
+
 mrep() {
     cd /project/$USER/my-repos/$1
 }

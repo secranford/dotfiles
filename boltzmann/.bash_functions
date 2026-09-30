@@ -244,6 +244,10 @@ cand() {
         cd /g/enet-ar-candler/COMMON/$1
 }
 
+saschw() {
+    cd /stage/software-schwart
+}
+
 mrep() {
     cd /project/$USER/my-repos/$1
 }

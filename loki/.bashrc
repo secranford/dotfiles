@@ -14,7 +14,7 @@ fi
 
 # Add your stuff below this line
 # SEAN CRANFORD
-#NOTE: your directory probably isn't called project on your system, change this to the approriate path. Similarly, if .bashrc is not used change corresponding references
+#NOTE: your directory probably isn't called project on your system, change this to the approriate path. Similarly, if .bashrc is not used change corresponding references. Originally I had everything in one bashrc, this is very disorganized. I have started utilizing different dot files to store things like aliases and functions and then load them here. .dircolors, .bash_aliases, and .bash_functions define other settings.
 
 ##custom display for environments, called below in PS1 export, \e[1;38;2;135;0;215m is for the shade of purple i want and for it to be bold
 #__my_custom_env_display() {
@@ -33,9 +33,16 @@ fi
 umask 066 #sets default directory permissions to read-write-execute for user and execute for group/others. new files have read-write permissions for user and none for group/others.
 #umask 022 #sets default permissions to be read-write for user, and read permissions for everybody else for files. For directories, this is read-write-execute for user and read-execute for groups/others. This is good for cluster so that if want to give permissions to a specific file, people can navigate your directories.
 
+#-- MODULEPATH updates --
+# Add more to path by repeating pattern. Heirarchy builds from bottom up, so last addition is searched first (prepend)
 if [ -d /project/$USER/opt/moduleFiles ]; then
-  module use --append /project/$USER/opt/moduleFiles # uses any custom modules you have set up
+	module use --append /project/$USER/opt/moduleFiles # uses any custom modules you have set up
 #module use --append /project/heinz194/opt/moduleFiles # JP's modules, for reference or use
+fi
+
+if [ -d /stage/software-schwart/modules ] && [ -x /stage/software-schwart/modules ]; then
+	module use --append /stage/software-schwart/modules # schwartzentruber lab shared software
+	export SCHW_SA=/stage/software-schwart
 fi
 
 #-- PATH updates --
@@ -43,15 +50,15 @@ fi
 
 # have custom installs or codes located in local/bin searched for before any on the system path and have scripts in local/scripts to run from anywhere. Should use modules instead but this could be good mainly for custom projects that are compiled and ready.
 if [ -d /project/$USER/local/scripts ]; then
-  export PATH="/project/$USER/local/scripts:$PATH"
+	export PATH="/project/$USER/local/scripts:$PATH"
 fi
 
 if [ -d /project/$USER/local/bin ]; then
-  export PATH="/project/$USER/local/bin:$PATH"
+	export PATH="/project/$USER/local/bin:$PATH"
 fi
 
 # Or can just append everything at once, above might be better for portability
-#export PATH="/project/$USER/local/bin:/project/$USER/local/scripts:$PATH" 
+#export PATH="/project/$USER/local/bin:/project/$USER/local/scripts:$PATH"
 
 stty erase "^?" #binds backspace key to ^? so it is usable, some systems default to ctrl+h only and this corrects
 #export LS_COLORS='di=94' #uses ansi bright blue instead of default ansi blue, 34. USE .dircolor instead!
