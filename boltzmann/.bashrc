@@ -123,3 +123,10 @@ fi
 if [ -f /project/$USER/local/codes/us3d-files/module-info/.us3d_load ]; then # access to us3d module loading function
 	. /project/$USER/local/codes/us3d-files/module-info/.us3d_load
 fi
+
+# If you are in sa-schwart-a (you can read the below file), load admin functions
+SA_SCHW_ADMIN_FUN="/stage/software-schwart/software/admin-only/tools/admin_func.sh"
+
+if [[ -r "$SA_SCHW_ADMIN_FUN" ]]; then
+	source "$SA_SCHW_ADMIN_FUN"
+fi
