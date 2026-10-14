@@ -41,6 +41,21 @@ btec() {
     tec360 "$@" > /dev/null 2>&1 &
 }
 
+# Short cut function for okular to run in the background and supress output. Could reuse this function with many below, but don't.
+bok() {
+    if ! command -v okular &>/dev/null; then
+        printf 'bok: okular is not installed or not in PATH\n' >&2
+        return 127
+    fi
+
+    if (( $# == 0 )); then
+        printf 'Usage: bok FILE [FILE ...]\n' >&2
+        return 2
+    fi
+
+    nohup okular "$@" > /dev/null 2>&1 < /dev/null &
+}
+
 #open relevant us3d doc files, change location to match
 uman() {
     local default="$LOCAL/codes/us3d-files/version/1.2.0/doc/US3D-User-Manual.pdf" #change to what you want default file to be
