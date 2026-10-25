@@ -29,8 +29,9 @@ alias disizes='du -hs * | sort -hr'          #lists the files in the current dir
 alias hiddensizes='du -hs .[^.]* | sort -hr' #similar to above but just shows hidden files and dirs, ie .ssh
 
 # this bwlimit is recommended for our system, probably not needed or a diff number on other systems
-alias rsync="rsync --backup --suffix=.backup --bwlimit=50000" #set bandwidth limit on rsync and is in backup mode so things dont accidentally get deleted, might slow things down though
-alias rsw="rsync -avuP --bwlimit=50000"                       #syntax: rsw <from> <to>, will copy new files from xxx to yyy ignoring older or up to date files and limiting the bandwidth. WARNING, destination is affected by .bashrc settings, ie, if bashrc for host puts you somewhere automatically, this is already included within the <user>@host path so truncate as needed
+alias rsync='rsync --backup --suffix=.backup --bwlimit=50000'               #set bandwidth limit on rsync and is in backup mode so things dont accidentally get deleted, might slow things down though
+alias rsw='rsync -avuP'                                                     #syntax: rsw <from> <to>, will copy new files from xxx to yyy ignoring older or up to date files and limiting the bandwidth. WARNING, destination is affected by .bashrc settings, ie, if bashrc for host puts you somewhere automatically, this is already included within the <user>@host path so truncate as needed
+alias rsw_tec='rsw --exclude="tec_files/*.plt" --exclude="tec_files/*.lpk"' # exclude big post processing files stored in my tec directory
 
 #------------------------------
 # Navigation Shortcuts

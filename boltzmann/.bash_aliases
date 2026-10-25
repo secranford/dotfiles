@@ -20,9 +20,10 @@ alias lwc="ls -A1 | wc -l" #counts number of files, including hidden in current 
 alias grep="grep --color"
 alias fgrep="fgrep --color"
 alias egrep="egrep --color"
-alias lg="ls -lAh | grep" #for use in searching, include pattern after and continue piping as needed
-alias sshy="ssh -Y"       #shouldn't default ssh to this
-alias pwd='pwd -P'        #ensures full path is always listed, not symlinked one
+alias lg="ls -lAh | grep"        #for use in searching, include pattern after and continue piping as needed
+alias sshy="ssh -Y"              #shouldn't default ssh to this
+alias pwd='pwd -P'               #ensures full path is always listed, not symlinked one
+alias tailR="tail -f RUN.stdout" #shortcut for tail
 
 #alias cp="cp -b" #-b option creates backup if file already exists, you can delete this later, safety feature
 #alias mv="mv -b" #NOTE: doing this caused issues because i did not specify interactive shell only for aliases and so system processes were creating a bunch of backups#alias cp="cp -b" #-b option creates backup if file already exists, you can delete this later, safety feature
@@ -32,8 +33,9 @@ alias disizes='du -hs * | sort -hr'          #lists the files in the current dir
 alias hiddensizes='du -hs .[^.]* | sort -hr' #similar to above but just shows hidden files and dirs, ie .ssh
 
 # this bwlimit is recommended for our system, probably not needed or a diff number on other systems
-alias rsync="rsync --backup --suffix=.backup --bwlimit=50000" #set bandwidth limit on rsync and is in backup mode so things dont accidentally get deleted, might slow things down though
-alias rsw="rsync -avuP --bwlimit=50000"                       #syntax: rsw <from> <to>, will copy new files from xxx to yyy ignoring older or up to date files and limiting the bandwidth. WARNING, destination is affected by .bashrc settings, ie, if bashrc for host puts you somewhere automatically, this is already included within the <user>@host path so truncate as needed
+alias rsync='rsync --backup --suffix=.backup --bwlimit=50000'               #set bandwidth limit on rsync and is in backup mode so things dont accidentally get deleted, might slow things down though
+alias rsw='rsync -avuP'                                                     #syntax: rsw <from> <to>, will copy new files from xxx to yyy ignoring older or up to date files and limiting the bandwidth. WARNING, destination is affected by .bashrc settings, ie, if bashrc for host puts you somewhere automatically, this is already included within the <user>@host path so truncate as needed
+alias rsw_tec='rsw --exclude="tec_files/*.plt" --exclude="tec_files/*.lpk"' # exclude big post processing files stored in my tec directory
 
 #------------------------------
 # Navigation Shortcuts
